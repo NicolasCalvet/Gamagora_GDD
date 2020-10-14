@@ -12,8 +12,10 @@ public class Level
     // Position inf grid of the Base to defend
     public Vector2 basePos;
 
-    public Level() {
+    // Waypoints
+    public List<GameObject> waypoints;
 
-    }
+    // Waves
+    public List<Wave> waves; 
 
 }
