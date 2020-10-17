@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9094852802972315873}
   m_Layer: 0
   m_Name: Truck
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  speed: 0.66
+  normalSpeed: 0.66
   goldGivedDeath: 15
   HP: 125
   unitFrequency: 2

@@ -4,6 +4,39 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/*
+ * TODO
+ *  - Buying Towers either : 
+ *      - choose a position and click on "buy" button
+ *      - click on buy button, ghost appear underneath mouse, and when mouse click, tower is placed
+ * 
+ *  - Towers behavior (easy to implement) :
+ *      - Add circle/sphere collider for range
+ *      - If an aenemy is INSIDE the collider, it's a target
+ *      - Select target and keep shooting a him until it is out of range or destroyed
+ *      - Select closest target if no target selected
+ *      
+ *      Canon : create gameobject projectile
+ *      Flamethrower : apply damage directly
+ *      Ion : reduce speed (need to think of a workaround)
+ *      
+ *      Might be a good idea to begin with the flammethrower
+ *      
+ *      It also implies to add colliders to enemies
+ *      
+ *  - We could add an victory / loose screen
+ *  
+ */
+
+
+
+
+
+
+
+
+
+
 public class GameManager : MonoBehaviour
 {
     
@@ -40,6 +73,11 @@ public class GameManager : MonoBehaviour
     private int waveIndex = 0;
     private bool allSpawned = false;
 
+    // Tower prefabs
+    public GameObject canon;
+    public GameObject flammeThrower;
+    public GameObject ion;
+
 
 
     public int gold;
@@ -49,10 +87,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI baseLifeText;
     public TextMeshProUGUI goldText;
 
+    public TextMeshProUGUI buttonText;
 
 
     private Cell selectedCell;
-
 
 
     // Start is called before the first frame update
@@ -62,13 +100,18 @@ public class GameManager : MonoBehaviour
         CreateFirstLevel();
         CreateMap();
 
-        timer = level.waves[waveIndex].unitPrefab.GetComponent<Enemy>().unitFrequency;
+        timer = timeBetweenWaves;
         nbRemainingToSpawn = level.waves[waveIndex].numberToSpawn;
 
         baseLifeText.text = life.ToString();
         goldText.text = gold.ToString();
 
         selectedCell = null;
+
+        //Instantiate(flammeThrower, new Vector3(8.5f, 0.5f, 7.5f), flammeThrower.transform.rotation);
+        //Instantiate(flammeThrower, new Vector3(7.5f, 0.5f, 7.5f), flammeThrower.transform.rotation);
+
+
     }
 
 
@@ -93,7 +136,7 @@ public class GameManager : MonoBehaviour
             if (counter >= timer) {
 
                 // Spawn unit
-                SpawnUnit(level.waves[waveIndex].unitPrefab);
+                SpawnEnemy(level.waves[waveIndex].unitPrefab);
 
                 // Decrement nbRemainingToSpawn
                 --nbRemainingToSpawn;
@@ -111,6 +154,68 @@ public class GameManager : MonoBehaviour
 
 
 
+    public void ChangeSpeed() {
+
+        if (buttonText.text == "x1") {
+            Time.timeScale = 2;
+            buttonText.text = "x2";
+
+        } else if (buttonText.text == "x2") {
+            Time.timeScale = 4;
+            buttonText.text = "x4";
+
+        } else if (buttonText.text == "x4") {
+            Time.timeScale = 8;
+            buttonText.text = "x8";
+
+        } else if (buttonText.text == "x8") {
+            Time.timeScale = 1;
+            buttonText.text = "x1";
+        }
+
+    }
+
+
+
+    public void SelectCell(Cell cell) {
+        selectedCell = cell;
+    }
+
+    public void BuyTower(GameObject tower) {
+
+        if (selectedCell == null) {
+            //Print message no selected cell
+            Debug.Log("No Selected Cell");
+            return;
+        }
+
+        if (gold < tower.GetComponent<Tower>().cost) {
+            //Print message not enough money
+            Debug.Log("Not enough money !");
+            return;
+        }
+
+        UseGold(tower.GetComponent<Tower>().cost);
+
+        Vector3 pos = selectedCell.transform.position;
+        pos.y = 0.5f;
+
+        Instantiate(tower, pos, tower.transform.rotation);
+
+        // Set selectedCell to null
+        selectedCell = null;
+    }
+
+    public void UseGold(int goldGivedDeath) {
+        gold -= goldGivedDeath;
+        goldText.text = gold.ToString();
+    }
+
+    public void GiveGold(int goldGivedDeath) {
+        gold += goldGivedDeath;
+        goldText.text = gold.ToString();
+    }
+
     public void ApplyDamage(int quantity) {
         life -= quantity;
         baseLifeText.text = life.ToString();
@@ -126,8 +231,8 @@ public class GameManager : MonoBehaviour
 
 
 
-    private void SpawnUnit(GameObject unitPrefeb) {
-        GameObject unit = Instantiate(unitPrefeb, level.waypoints[0].transform.position, Quaternion.identity);
+    private void SpawnEnemy(GameObject unitPrefeb) {
+        GameObject unit = Instantiate(unitPrefeb, level.waypoints[0].transform.position, unitPrefeb.transform.rotation);
         unit.GetComponent<MovingEnemy>().SetLevel(level);
     }
 
@@ -187,11 +292,14 @@ public class GameManager : MonoBehaviour
         //Only one for now
         level.waves = new List<Wave>();
 
-        Wave w1 = new Wave(jeep, 5);
-        level.waves.Add(w1);
+        //Wave w1 = new Wave(jeep, 10);
+        //level.waves.Add(w1);
         
-        Wave w2 = new Wave(truck, 2);
+        Wave w2 = new Wave(truck, 5);
         level.waves.Add(w2);
+        
+        Wave w3 = new Wave(vbtt, 2);
+        level.waves.Add(w3);
 
     }
 
@@ -220,13 +328,4 @@ public class GameManager : MonoBehaviour
         grid[i, j].type = type;
         grid[i, j].ChangeMaterial();
     }
-
-
-
-    void BuyTower(GameObject tower) {
-        if (selectedCell == null) {
-            //TODO : print message
-        }
-    }
-
 }

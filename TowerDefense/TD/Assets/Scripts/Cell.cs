@@ -8,9 +8,22 @@ public class Cell : MonoBehaviour
     public Material grassMat;
     public Material pathMat;
     public Material baseMat;
+    public Material hoverMat;
 
     public CellType type;
 
+
+    void OnMouseOver() {
+        GetComponent<MeshRenderer>().material = hoverMat;
+    }
+
+    void OnMouseExit() {
+        ChangeMaterial();
+    }
+
+    void OnMouseDown() {
+        GameObject.Find("GameManager").GetComponent<GameManager>().SelectCell(this);
+    }
 
     public void ChangeMaterial() {
         switch (type) {
