@@ -4,38 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-/*
- * TODO
- *  - Buying Towers either : 
- *      - choose a position and click on "buy" button
- *      - click on buy button, ghost appear underneath mouse, and when mouse click, tower is placed
- * 
- *  - Towers behavior (easy to implement) :
- *      - Add circle/sphere collider for range
- *      - If an aenemy is INSIDE the collider, it's a target
- *      - Select target and keep shooting a him until it is out of range or destroyed
- *      - Select closest target if no target selected
- *      
- *      Canon : create gameobject projectile
- *      Flamethrower : apply damage directly
- *      Ion : reduce speed (need to think of a workaround)
- *      
- *      Might be a good idea to begin with the flammethrower
- *      
- *      It also implies to add colliders to enemies
- *      
- *  - We could add an victory / loose screen
- *  
- */
-
-
-
-
-
-
-
-
-
 
 public class GameManager : MonoBehaviour
 {
@@ -178,6 +146,11 @@ public class GameManager : MonoBehaviour
 
 
     public void SelectCell(Cell cell) {
+        if (cell.hasTower) {
+            Debug.Log("This cell has already a tower");
+            return;
+        }
+
         selectedCell = cell;
     }
 
@@ -185,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         if (selectedCell == null) {
             //Print message no selected cell
-            Debug.Log("No Selected Cell");
+            Debug.Log("No Selected Cell !");
             return;
         }
 
@@ -203,6 +176,7 @@ public class GameManager : MonoBehaviour
         Instantiate(tower, pos, tower.transform.rotation);
 
         // Set selectedCell to null
+        selectedCell.hasTower = true;
         selectedCell = null;
     }
 
@@ -226,9 +200,8 @@ public class GameManager : MonoBehaviour
 
     void PlayerLose() {
         Time.timeScale = 0;
-        // TODO : print message
+        Debug.Log("Player LOSE");
     }
-
 
 
     private void SpawnEnemy(GameObject unitPrefeb) {

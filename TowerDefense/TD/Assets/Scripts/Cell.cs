@@ -11,10 +11,16 @@ public class Cell : MonoBehaviour
     public Material hoverMat;
 
     public CellType type;
+    internal bool hasTower;
 
+    void Start() {
+        hasTower = false;
+    }
 
     void OnMouseOver() {
-        GetComponent<MeshRenderer>().material = hoverMat;
+        if (type == CellType.Grass && !hasTower) {
+            GetComponent<MeshRenderer>().material = hoverMat;
+        }
     }
 
     void OnMouseExit() {
