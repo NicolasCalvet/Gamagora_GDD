@@ -11,6 +11,11 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        if (target == null) {
+            Destroy(gameObject);
+            return;
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * speed);
     }
 
