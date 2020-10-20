@@ -37,7 +37,16 @@ public class FlammeThrower : Tower
     }
 
     public override void RemoveEntry(Collider other) {
+        base.RemoveEntry(other);
         colliders.Remove(other);
+    }
+
+    public override void Upgrade() {
+        base.Upgrade();
+
+        damage += damageUpgrade;
+        range += rangeUpgrade;
+
     }
 
 }

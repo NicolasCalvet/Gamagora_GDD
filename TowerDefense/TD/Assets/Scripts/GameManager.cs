@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -55,7 +55,14 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI baseLifeText;
     public TextMeshProUGUI goldText;
 
-    public TextMeshProUGUI buttonText;
+    public TextMeshProUGUI speedButtonText;
+
+    /* BUTTONS */
+    public GameObject buyCanonButton;
+    public GameObject buyFTButton;
+    public GameObject buyIonButton;
+
+    public GameObject buyUpgradeButton;
 
 
     private Cell selectedCell;
@@ -124,34 +131,40 @@ public class GameManager : MonoBehaviour
 
     public void ChangeSpeed() {
 
-        if (buttonText.text == "x1") {
+        if (speedButtonText.text == "x1") {
             Time.timeScale = 2;
-            buttonText.text = "x2";
+            speedButtonText.text = "x2";
 
-        } else if (buttonText.text == "x2") {
+        } else if (speedButtonText.text == "x2") {
             Time.timeScale = 4;
-            buttonText.text = "x4";
+            speedButtonText.text = "x4";
 
-        } else if (buttonText.text == "x4") {
+        } else if (speedButtonText.text == "x4") {
             Time.timeScale = 8;
-            buttonText.text = "x8";
+            speedButtonText.text = "x8";
 
-        } else if (buttonText.text == "x8") {
+        } else if (speedButtonText.text == "x8") {
             Time.timeScale = 1;
-            buttonText.text = "x1";
+            speedButtonText.text = "x1";
         }
 
     }
 
 
-
     public void SelectCell(Cell cell) {
-        if (cell.hasTower) {
+        if (cell.HasTower) {
             Debug.Log("This cell has already a tower");
             return;
         }
 
+        if (selectedCell != null) {
+            selectedCell.Unselect();
+        }
+
         selectedCell = cell;
+        buyCanonButton.SetActive(true);
+        buyFTButton.SetActive(true);
+        buyIonButton.SetActive(true);
     }
 
     public void BuyTower(GameObject tower) {
@@ -173,11 +186,21 @@ public class GameManager : MonoBehaviour
         Vector3 pos = selectedCell.transform.position;
         pos.y = 0.5f;
 
-        Instantiate(tower, pos, tower.transform.rotation);
+        GameObject towerCreated = Instantiate(tower, pos, tower.transform.rotation);
 
         // Set selectedCell to null
-        selectedCell.hasTower = true;
+        selectedCell.SetTower(towerCreated.GetComponent<Tower>());
+        selectedCell.Unselect();
         selectedCell = null;
+
+        buyCanonButton.SetActive(false);
+        buyFTButton.SetActive(false);
+        buyIonButton.SetActive(false);
+    }
+
+    public void BuyUpgrade() {
+
+        buyUpgradeButton.SetActive(false);
     }
 
     public void UseGold(int goldGivedDeath) {
@@ -262,12 +285,11 @@ public class GameManager : MonoBehaviour
         level.waypoints.Add(Instantiate(waypoint, new Vector3(7.5f, 0.5f, 14.5f), Quaternion.identity, waypointContainer.transform));
 
         // Waves
-        //Only one for now
         level.waves = new List<Wave>();
 
-        //Wave w1 = new Wave(jeep, 10);
-        //level.waves.Add(w1);
-        
+        Wave w1 = new Wave(jeep, 10);
+        level.waves.Add(w1);
+
         Wave w2 = new Wave(truck, 5);
         level.waves.Add(w2);
         

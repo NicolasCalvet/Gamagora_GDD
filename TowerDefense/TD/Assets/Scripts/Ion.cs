@@ -20,4 +20,12 @@ public class Ion : Tower {
         }
     }
 
+    public override void Upgrade() {
+        base.Upgrade();
+
+        damage += damageUpgrade;
+        range += rangeUpgrade;
+
+    }
+
 }

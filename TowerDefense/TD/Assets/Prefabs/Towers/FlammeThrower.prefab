@@ -211,4 +211,8 @@ MonoBehaviour:
   range: 3
   fireRate: 0.5
   cost: 150
+  upgradeCost: 175
+  damageUpgrade: 2
+  rangeUpgrade: 0.5
+  fireRateUpgrade: 0
   counter: 0

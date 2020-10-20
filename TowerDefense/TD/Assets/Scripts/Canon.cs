@@ -49,6 +49,7 @@ public class Canon : Tower {
     }
 
     public override void RemoveEntry(Collider other) {
+        base.RemoveEntry(other);
 
         colliders.Remove(other);
 
@@ -61,6 +62,16 @@ public class Canon : Tower {
             }
 
         }
+    }
+
+
+    public override void Upgrade() {
+        base.Upgrade();
+
+        damage += damageUpgrade;
+        range += rangeUpgrade;
+        fireRate = fireRateUpgrade;
+
     }
 
 }

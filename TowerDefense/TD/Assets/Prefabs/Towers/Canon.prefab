@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 8023682145704116944}
   - component: {fileID: -3807303554239528736}
   - component: {fileID: -6510712356694810628}
-  - component: {fileID: -8352309885686670700}
   - component: {fileID: 6147027754850983318}
   m_Layer: 2
   m_Name: Canon
@@ -196,22 +195,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-8352309885686670700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8023682145704116950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6688cd1a0745c134380c480288e70594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 25
-  range: 5
-  fireRate: 1
-  cost: 100
 --- !u!114 &6147027754850983318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +211,10 @@ MonoBehaviour:
   range: 5
   fireRate: 1
   cost: 100
+  upgradeCost: 125
+  damageUpgrade: 5
+  rangeUpgrade: 0.5
+  fireRateUpgrade: 0.8
   projectile: {fileID: 7717898721998179762, guid: ae4924a6d826c0d4eb1b8b0fa89c1f20, type: 3}
   projectileSpeed: 1.5
   counter: 0

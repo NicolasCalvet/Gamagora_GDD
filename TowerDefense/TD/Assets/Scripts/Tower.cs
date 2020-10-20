@@ -16,6 +16,11 @@ public class Tower : MonoBehaviour {
     // Gold cost to build
     public int cost;
 
+    public int upgradeCost;
+    public int damageUpgrade;
+    public float rangeUpgrade;
+    public float fireRateUpgrade;
+
 
     SphereCollider sc;
     void Start() {
@@ -33,5 +38,7 @@ public class Tower : MonoBehaviour {
 
 
     public virtual void RemoveEntry(Collider other) { }
+
+    public virtual void Upgrade() { }
 
 }

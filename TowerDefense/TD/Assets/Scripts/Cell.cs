@@ -11,14 +11,19 @@ public class Cell : MonoBehaviour
     public Material hoverMat;
 
     public CellType type;
-    internal bool hasTower;
+    private bool isSelected;
+
+    public Tower tower;
+
+    public bool HasTower { get; set; }
 
     void Start() {
-        hasTower = false;
+        HasTower = false;
+        isSelected = false;
     }
 
     void OnMouseOver() {
-        if (type == CellType.Grass && !hasTower) {
+        if (type == CellType.Grass && !HasTower) {
             GetComponent<MeshRenderer>().material = hoverMat;
         }
     }
@@ -29,12 +34,16 @@ public class Cell : MonoBehaviour
 
     void OnMouseDown() {
         GameObject.Find("GameManager").GetComponent<GameManager>().SelectCell(this);
+        isSelected = true;
     }
 
     public void ChangeMaterial() {
         switch (type) {
             case CellType.Grass:
                 GetComponent<MeshRenderer>().material = grassMat;
+                if (isSelected) {
+                    GetComponent<MeshRenderer>().material = hoverMat;
+                }
                 break;
             case CellType.Path:
                 GetComponent<MeshRenderer>().material = pathMat;
@@ -44,4 +53,15 @@ public class Cell : MonoBehaviour
                 break;
         }
     }
+
+    public void Unselect() {
+        isSelected = false;
+        ChangeMaterial();
+    }
+
+    public void SetTower(Tower tw) {
+        this.HasTower = true;
+        this.tower = tw;
+    }
+
 }
