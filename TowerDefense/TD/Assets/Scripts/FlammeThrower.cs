@@ -47,6 +47,7 @@ public class FlammeThrower : Tower
         damage += damageUpgrade;
         range += rangeUpgrade;
 
+        SetRange(range);
     }
 
 }

@@ -72,6 +72,7 @@ public class Canon : Tower {
         range += rangeUpgrade;
         fireRate = fireRateUpgrade;
 
+        SetRange(range);
     }
 
 }

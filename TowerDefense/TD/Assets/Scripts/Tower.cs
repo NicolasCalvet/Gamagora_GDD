@@ -23,6 +23,9 @@ public class Tower : MonoBehaviour {
 
 
     SphereCollider sc;
+
+    public bool IsUpgraded { get; set; }
+
     void Start() {
 
         //sc = gameObject.AddComponent<SphereCollider>() as SphereCollider;
@@ -39,6 +42,8 @@ public class Tower : MonoBehaviour {
 
     public virtual void RemoveEntry(Collider other) { }
 
-    public virtual void Upgrade() { }
+    public virtual void Upgrade() {
+        IsUpgraded = true;
+    }
 
 }

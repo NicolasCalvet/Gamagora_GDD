@@ -83,10 +83,6 @@ public class GameManager : MonoBehaviour
 
         selectedCell = null;
 
-        //Instantiate(flammeThrower, new Vector3(8.5f, 0.5f, 7.5f), flammeThrower.transform.rotation);
-        //Instantiate(flammeThrower, new Vector3(7.5f, 0.5f, 7.5f), flammeThrower.transform.rotation);
-
-
     }
 
 
@@ -152,19 +148,29 @@ public class GameManager : MonoBehaviour
 
 
     public void SelectCell(Cell cell) {
-        if (cell.HasTower) {
-            Debug.Log("This cell has already a tower");
-            return;
-        }
+
+        UnsetActiveAllButton();
 
         if (selectedCell != null) {
             selectedCell.Unselect();
         }
 
         selectedCell = cell;
-        buyCanonButton.SetActive(true);
-        buyFTButton.SetActive(true);
-        buyIonButton.SetActive(true);
+
+        if (selectedCell.HasTower) {
+            buyUpgradeButton.SetActive(true);
+        } else {
+            buyCanonButton.SetActive(true);
+            buyFTButton.SetActive(true);
+            buyIonButton.SetActive(true);
+        }
+    }
+
+    private void UnsetActiveAllButton() {
+        buyUpgradeButton.SetActive(false);
+        buyCanonButton.SetActive(false);
+        buyFTButton.SetActive(false);
+        buyIonButton.SetActive(false);
     }
 
     public void BuyTower(GameObject tower) {
@@ -175,9 +181,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (selectedCell.HasTower) {
+            //Print message cell already has a tower
+            Debug.Log("Cell already has a tower !");
+            return;
+        }
+
         if (gold < tower.GetComponent<Tower>().cost) {
             //Print message not enough money
-            Debug.Log("Not enough money !");
+            Debug.Log("Not enough money to buy !");
             return;
         }
 
@@ -193,14 +205,34 @@ public class GameManager : MonoBehaviour
         selectedCell.Unselect();
         selectedCell = null;
 
-        buyCanonButton.SetActive(false);
-        buyFTButton.SetActive(false);
-        buyIonButton.SetActive(false);
+        UnsetActiveAllButton();
     }
 
     public void BuyUpgrade() {
 
-        buyUpgradeButton.SetActive(false);
+        if (selectedCell == null) {
+            //Print message no selected cell
+            Debug.Log("No Selected Cell !");
+            return;
+        }
+
+        if (!selectedCell.HasTower) {
+            //Print message cell already has a tower
+            Debug.Log("Cell does not have a tower");
+            return;
+        }
+
+        if (gold < selectedCell.tower.GetComponent<Tower>().upgradeCost) {
+            //Print message not enough money
+            Debug.Log("Not enough money to upgrade !");
+            return;
+        }
+
+        UseGold(selectedCell.tower.GetComponent<Tower>().upgradeCost);
+
+        selectedCell.tower.Upgrade();
+
+        UnsetActiveAllButton();
     }
 
     public void UseGold(int goldGivedDeath) {

@@ -20,10 +20,11 @@ public class Cell : MonoBehaviour
     void Start() {
         HasTower = false;
         isSelected = false;
+        tower = null;
     }
 
     void OnMouseOver() {
-        if (type == CellType.Grass && !HasTower) {
+        if (type == CellType.Grass) {
             GetComponent<MeshRenderer>().material = hoverMat;
         }
     }
@@ -33,8 +34,14 @@ public class Cell : MonoBehaviour
     }
 
     void OnMouseDown() {
-        GameObject.Find("GameManager").GetComponent<GameManager>().SelectCell(this);
-        isSelected = true;
+        if (type != CellType.Grass) {
+            Debug.Log("Can only buy on a grass cell");
+            return;
+        }
+        if (!HasTower || !tower.IsUpgraded) {
+            GameObject.Find("GameManager").GetComponent<GameManager>().SelectCell(this);
+            isSelected = true;
+        }
     }
 
     public void ChangeMaterial() {

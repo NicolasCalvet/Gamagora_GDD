@@ -262,7 +262,7 @@ MonoBehaviour:
   canon: {fileID: 8023682145704116950, guid: a666eabe2ecf4c04c8bc55f85b283003, type: 3}
   flammeThrower: {fileID: 9036185389333326920, guid: 026e2f3fc22c11145855284be1e3d574, type: 3}
   ion: {fileID: 8081219324774581768, guid: 81ef22f863b069743b616cee5396f474, type: 3}
-  gold: 200
+  gold: 2000
   life: 5
   baseLifeText: {fileID: 405716682}
   goldText: {fileID: 1282168775}
@@ -270,7 +270,7 @@ MonoBehaviour:
   buyCanonButton: {fileID: 737428821}
   buyFTButton: {fileID: 922777795}
   buyIonButton: {fileID: 901376514}
-  buyUpgradeButton: {fileID: 0}
+  buyUpgradeButton: {fileID: 517117459}
 --- !u!1 &369041795
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -691,7 +691,7 @@ RectTransform:
   m_Children:
   - {fileID: 626093726}
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 8
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -743,11 +743,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 268957439}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: BuyTower
-        m_Mode: 2
+        m_MethodName: BuyUpgrade
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8081219324774581768, guid: 81ef22f863b069743b616cee5396f474, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1203,7 +1203,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1747,12 +1747,12 @@ RectTransform:
   - {fileID: 737428822}
   - {fileID: 922777796}
   - {fileID: 901376515}
+  - {fileID: 517117460}
   - {fileID: 2071618250}
   - {fileID: 807080967}
   - {fileID: 405716681}
   - {fileID: 1577404917}
   - {fileID: 1282168774}
-  - {fileID: 517117460}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1791,7 +1791,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1925,7 +1925,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2197,7 +2197,7 @@ RectTransform:
   m_Children:
   - {fileID: 1933496011}
   m_Father: {fileID: 1246174006}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
